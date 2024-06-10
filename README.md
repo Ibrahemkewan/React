@@ -1,70 +1,75 @@
-# Getting Started with Create React App
+# YouTube Clone Application
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a simple YouTube clone application built with React. It features user registration, login, and basic video list and detail functionalities. The app uses `sessionStorage` to temporarily store user data for the session. Below is a brief overview of the different screens and their functionalities.
 
-## Available Scripts
+## Screens
 
-In the project directory, you can run:
+### 1. Register
+- **Path:** `/register`
+- **Description:** This screen allows new users to create an account. Users must enter a username, password, confirm password, display name, and optionally upload a profile photo. Passwords must be at least 6 characters long and must match the confirmed password. On successful registration, the user data is stored in `sessionStorage`, an alert is displayed, and the user is redirected to the login screen.
 
-### `npm start`
+### 2. Login
+- **Path:** `/login`
+- **Description:** This screen allows registered users to log in. Users must enter their username and password. The credentials are checked against the data stored in `sessionStorage`. On successful login, the user is redirected to the home screen. If the credentials are incorrect, an error message is displayed.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### 3. Home
+- **Path:** `/`
+- **Description:** The home screen provides a brief overview or welcome message. This can be customized to include trending videos, user recommendations, or any other content you'd like to highlight.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### 4. Video List
+- **Path:** `/videos`
+- **Description:** This screen displays a list of videos. Users can search for videos by title. Clicking on a video will navigate to the video detail screen. The list is scrollable and each video is displayed with a title and a description. A button is provided to add new videos, which redirects to the add video screen.
 
-### `npm test`
+### 5. Add Video
+- **Path:** `/add`
+- **Description:** This screen allows users to add new videos to the list. Users must enter a video title, description, and URL. On submitting the form, the video is added to the list of videos, but it will only persist for the session (it will disappear when the app is restarted).
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 6. Video Detail
+- **Path:** `/video/:id`
+- **Description:** This screen displays the details of a selected video, including the video player, title, description, and interactive buttons for liking, sharing, and commenting. Users can add new comments, edit existing comments, or delete comments. The like button is interactive and changes appearance when clicked. The share button opens a list of sharing options.
 
-### `npm run build`
+## Installation and Setup
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. **Clone the Repository:**
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+   git clone https://github.com/your-repo/youtube-clone.git
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+2. **Install Dependencies:**
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+   npm install
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+3. **Start the Development Server:**
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+   npm start
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+4. **Open in Browser:**
+   Open your browser and navigate to `http://localhost:3000`.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Dependencies
 
-### Code Splitting
+- **React:** A JavaScript library for building user interfaces.
+- **React Router:** A library for routing in React applications.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## File Structure
 
-### Analyzing the Bundle Size
+```
+.
+├── public
+│   ├── index.html
+│   └── videos.json        # Sample videos data
+└── src
+    ├── screens
+    │   ├── AddVideo.js
+    │   ├── Login.js
+    │   ├── Register.js
+    │   ├── VideoDetail.js
+    │   ├── VideoList.js
+    │   └── register.css   # Shared CSS for Register and Login
+    ├── App.js
+    ├── App.css
+    └── index.js
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

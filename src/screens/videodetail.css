@@ -1,0 +1,145 @@
+/* VideoDetail.css */
+
+/* Inherit color and background color */
+.video-detail-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    color: inherit;
+    background-color: inherit;
+  }
+  
+  .video-detail-container video {
+    margin-bottom: 20px;
+  }
+  
+  .video-detail-container h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .video-detail-container p {
+    font-size: 16px;
+    color: inherit;
+    margin-bottom: 20px;
+  }
+  
+  .interaction-buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .interaction-buttons button {
+    padding: 10px 20px;
+    background-color: #ff0000;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .interaction-buttons button:hover {
+    background-color: #cc0000;
+  }
+  
+  .interaction-buttons .liked {
+    background-color: #00cc00;
+  }
+  
+  .share-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+  }
+  
+  .share-options button {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  .share-options button:hover {
+    background-color: #0056b3;
+  }
+  
+  .comments-section {
+    width: 100%;
+    max-width: 640px;
+  }
+  
+  .add-comment {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .add-comment input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .add-comment button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .add-comment button:hover {
+    background-color: #0056b3;
+  }
+  
+  .comments-list .comment {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  .comments-list .comment p {
+    margin: 0;
+    flex: 1;
+  }
+  
+  .comments-list .comment button {
+    margin-left: 10px;
+    padding: 5px 10px;
+    background-color: #ffc107;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .comments-list .comment button:hover {
+    background-color: #e0a800;
+  }
+  
+  .comments-list .comment button:nth-child(3) {
+    background-color: #dc3545;
+  }
+  
+  .comments-list .comment button:nth-child(3):hover {
+    background-color: #c82333;
+  }
+  
+  .comments-list .comment input {
+    flex: 1;
+    padding: 5px;
+    margin-right: 10px;
+  }
+  

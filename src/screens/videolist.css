@@ -1,0 +1,129 @@
+/* VideoList.css */
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  .video-list-container {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+  }
+  
+  /* Light Theme Styles */
+  .video-list-container.light {
+    background-color: #ffffff;
+    color: #000000;
+  }
+  
+  .video-list-container.light header {
+    background-color: #f1f1f1;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .video-list-container.light .left-menu {
+    background-color: #f9f9f9;
+    border-right: 1px solid #ddd;
+  }
+  
+  .video-list-container.light header button {
+    background-color: #ff0000;
+    color: #fff;
+  }
+  
+  .video-list-container.light header button:hover {
+    background-color: #cc0000;
+  }
+  
+  /* Dark Theme Styles */
+  .video-list-container.dark {
+    background-color: #121212;
+    color: #ffffff;
+  }
+  
+  .video-list-container.dark header {
+    background-color: #333333;
+    border-bottom: 1px solid #444444;
+  }
+  
+  .video-list-container.dark .left-menu {
+    background-color: #333333;
+    border-right: 1px solid #444444;
+  }
+  
+  .video-list-container.dark header button {
+    background-color: #555555;
+    color: #ffffff;
+  }
+  
+  .video-list-container.dark header button:hover {
+    background-color: #777777;
+  }
+  
+  header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  header input {
+    width: 200px;
+    padding: 5px;
+  }
+  
+  .left-menu {
+    width: 200px;
+    padding-top: 50px; /* Adjust for header height */
+  }
+  
+  .left-menu ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .left-menu ul li {
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .left-menu ul li:hover {
+    background-color: #eee;
+  }
+  
+  main {
+    flex: 1;
+    padding: 50px 20px 20px 20px; /* Adjust for header height */
+    overflow-y: auto;
+  }
+  
+  .video-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .video-item {
+    width: 320px;
+    cursor: pointer;
+  }
+  
+  .video-item video {
+    width: 100%;
+    height: auto;
+  }
+  
+  .video-item h3 {
+    font-size: 18px;
+    margin: 10px 0 5px;
+  }
+  
+  .video-item p {
+    font-size: 14px;
+    color: inherit; /* Use inherit to adapt to both themes */
+  }
+  
