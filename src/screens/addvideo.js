@@ -1,23 +1,49 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import './addvideo.css';
 
-const AddVideo = ({ onAddVideo }) => {
+const AddVideo = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [url, setUrl] = useState('');
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+
+    // Retrieve userId and token from session storage
+    const userId = sessionStorage.getItem('userId');
+    const token = sessionStorage.getItem('token');
+    if (!userId || !token) {
+      setError('User not logged in');
+      return;
+    }
+
     const newVideo = {
-      id: Date.now(),
       title,
       description,
       url,
     };
-    onAddVideo(newVideo);
-    navigate('/');
+
+    try {
+      const response = await axios.post(`http://localhost:5000/api/users/${userId}/videos`, newVideo, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log('Video added:', response.data);
+      navigate('/videolist');
+    } catch (error) {
+      console.error('Error adding video:', error);
+      if (error.response && error.response.data) {
+        setError(error.response.data.message);
+      } else {
+        setError('An error occurred while adding the video.');
+      }
+    }
   };
 
   return (
@@ -48,6 +74,7 @@ const AddVideo = ({ onAddVideo }) => {
           onChange={(e) => setUrl(e.target.value)}
           required
         />
+        {error && <div className="error">{error}</div>}
         <button type="submit" className="button">
           Add Video
         </button>
@@ -57,4 +84,3 @@ const AddVideo = ({ onAddVideo }) => {
 };
 
 export default AddVideo;
- 

@@ -1,31 +1,46 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './register.css';
+import { useNavigate, Link } from 'react-router-dom';
+import axios from 'axios';
+import './login.css';  // Ensure the CSS file is correctly named and imported
 
 const Login = () => {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const storedUser = JSON.parse(sessionStorage.getItem('user'));
 
-    if (!username) {
-      setErrors({ username: 'Username is required' });
+    if (!email) {
+      setErrors({ email: 'Email is required' });
     } else if (!password) {
       setErrors({ password: 'Password is required' });
-    } else if (
-      storedUser &&
-      storedUser.username === username &&
-      storedUser.password === password
-    ) {
-      console.log('User logged in:', storedUser);
-      setErrors({});
-      navigate('/'); // Redirect to home page after successful login
     } else {
-      setErrors({ login: 'Invalid username or password' });
+      try {
+        const response = await axios.post('http://localhost:5000/api/users/login', {
+          email,
+          password,
+        });
+        console.log('User logged in:', response.data);
+
+        // Save token to session storage
+        sessionStorage.setItem('token', response.data.token);
+        sessionStorage.setItem('userId', response.data.userId);
+        // Print the token
+        console.log('JWT Token:', response.data.token);
+        console.log('User ID:', response.data.userId);
+        setErrors({});
+        window.alert('Login successful!');
+        navigate('/videolist'); // Redirect to home page after successful login
+      } catch (error) {
+        console.error('Error logging in:', error);
+        if (error.response && error.response.data) {
+          setErrors({ login: error.response.data.message });
+        } else {
+          setErrors({ login: 'An error occurred during login.' });
+        }
+      }
     }
   };
 
@@ -34,14 +49,14 @@ const Login = () => {
       <form className="form" onSubmit={handleSubmit}>
         <h2>Login to your YouTube account</h2>
         <input
-          type="text"
-          placeholder="Username"
+          type="email"
+          placeholder="Email"
           className="input"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           required
         />
-        {errors.username && <div className="error">{errors.username}</div>}
+        {errors.email && <div className="error">{errors.email}</div>}
         <input
           type="password"
           placeholder="Password"
@@ -56,6 +71,9 @@ const Login = () => {
           Login
         </button>
       </form>
+      <div className="register-link">
+        Don't have an account? <Link to="/register">Register</Link>
+      </div>
     </div>
   );
 };

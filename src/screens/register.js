@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import './register.css';
 
 const Register = () => {
-  const [username, setUsername] = useState('');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [displayName, setDisplayName] = useState('');
-  const [photo, setPhoto] = useState(null);
+  const [picture, setPicture] = useState(null);
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
@@ -29,24 +30,45 @@ const Register = () => {
     return valid;
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    if (validatePassword()) {
-      const user = {
-        username,
-        password,
-        displayName,
-        photo,
+  const handlePictureChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPicture(reader.result);
       };
-      sessionStorage.setItem('user', JSON.stringify(user));
-      console.log('User registered:', user);
-      window.alert('You have registered successfully!');
-      navigate('/login'); // Redirect to login page after successful registration
+      reader.readAsDataURL(file);
     }
   };
 
-  const handlePhotoChange = (event) => {
-    setPhoto(event.target.files[0]);
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (validatePassword()) {
+      const user = {
+        name,
+        email,
+        password,
+        picture,
+      };
+
+      try {
+        const response = await axios.post('http://localhost:5000/api/users', user, {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        console.log('User registered:', response.data);
+        window.alert('You have registered successfully!');
+        navigate('/login'); // Redirect to login page after successful registration
+      } catch (error) {
+        console.error('Error registering user:', error);
+        if (error.response && error.response.data) {
+          setErrors({ apiError: error.response.data.message });
+        } else {
+          setErrors({ apiError: 'An error occurred during registration.' });
+        }
+      }
+    }
   };
 
   return (
@@ -55,10 +77,18 @@ const Register = () => {
         <h2>Create your YouTube account</h2>
         <input
           type="text"
-          placeholder="Username"
+          placeholder="Name"
           className="input"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+        />
+        <input
+          type="email"
+          placeholder="Email"
+          className="input"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           required
         />
         <input
@@ -82,18 +112,13 @@ const Register = () => {
           <div className="error">{errors.confirmPassword}</div>
         )}
         <input
-          type="text"
-          placeholder="Display Name"
-          className="input"
-          value={displayName}
-          onChange={(e) => setDisplayName(e.target.value)}
-          required
-        />
-        <input
           type="file"
           className="input"
-          onChange={handlePhotoChange}
+          onChange={handlePictureChange}
         />
+        {errors.apiError && (
+          <div className="error">{errors.apiError}</div>
+        )}
         <button type="submit" className="button">
           Register
         </button>

@@ -179,14 +179,40 @@ main {
   margin-bottom: 10px;
 }
 
-.owner-details {
+.video-actions {
   display: flex;
-  align-items: center;
+  justify-content: space-between;
 }
 
-.owner-details .avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  margin-right: 10px;
+.video-actions button {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.video-actions button:hover {
+  background-color: #ddd;
+}
+
+/* Light Theme Styles */
+.video-list-container.light .video-actions button {
+  background-color: #f1f1f1;
+  color: #333;
+}
+
+.video-list-container.light .video-actions button:hover {
+  background-color: #ddd;
+}
+
+/* Dark Theme Styles */
+.video-list-container.dark .video-actions button {
+  background-color: #444;
+  color: #fff;
+}
+
+.video-list-container.dark .video-actions button:hover {
+  background-color: #555;
 }

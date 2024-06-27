@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
 import './videodetail.css';
 
-
-const VideoDetail = ({ videos }) => {
-  const { id } = useParams();
-  const video = videos.find((video) => video.id === parseInt(id));
+const VideoDetail = () => {
+  const { videoId, ownerId } = useParams(); // Extract both videoId and ownerId from the URL
+  const [video, setVideo] = useState(null);
   const [liked, setLiked] = useState(false);
   const [shareOptionsVisible, setShareOptionsVisible] = useState(false);
   const [comments, setComments] = useState([
@@ -15,9 +15,34 @@ const VideoDetail = ({ videos }) => {
   const [newComment, setNewComment] = useState('');
   const [editingComment, setEditingComment] = useState(null);
   const [editText, setEditText] = useState('');
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    const fetchVideoDetails = async () => {
+      const token = sessionStorage.getItem('token');
+      if (!ownerId || !token) {
+        setError('User not logged in');
+        return;
+      }
+
+      try {
+        const response = await axios.get(`http://localhost:5000/api/users/${ownerId}/videos/${videoId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setVideo(response.data);
+      } catch (error) {
+        console.error('Error fetching video details:', error);
+        setError('An error occurred while fetching video details.');
+      }
+    };
+
+    fetchVideoDetails();
+  }, [videoId, ownerId]);
 
   if (!video) {
-    return <div>Video not found</div>;
+    return <div>{error ? error : 'Loading video details...'}</div>;
   }
 
   const handleAddComment = () => {
