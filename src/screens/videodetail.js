@@ -4,7 +4,7 @@ import axios from 'axios';
 import './videodetail.css';
 
 const VideoDetail = () => {
-  const { videoId, ownerId } = useParams(); // Extract both videoId and ownerId from the URL
+  const { videoId, ownerId } = useParams();
   const [video, setVideo] = useState(null);
   const [liked, setLiked] = useState(false);
   const [shareOptionsVisible, setShareOptionsVisible] = useState(false);
@@ -42,7 +42,7 @@ const VideoDetail = () => {
   }, [videoId, ownerId]);
 
   if (!video) {
-    return <div>{error ? error : 'Loading video details...'}</div>;
+    return <div className="loading">{error ? error : 'Loading video details...'}</div>;
   }
 
   const handleAddComment = () => {
@@ -80,27 +80,31 @@ const VideoDetail = () => {
 
   return (
     <div className="video-detail-container">
-      <video controls width="640" height="480">
-        <source src={video.url} type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
-      <h3>{video.title}</h3>
-      <p>{video.description}</p>
-      <div className="interaction-buttons">
-        <button className={liked ? 'liked' : ''} onClick={toggleLike}>
-          {liked ? 'Liked' : 'Like'}
-        </button>
-        <button onClick={toggleShareOptions}>Share</button>
-        {shareOptionsVisible && (
-          <div className="share-options">
-            <button onClick={() => alert('Shared on Facebook!')}>Facebook</button>
-            <button onClick={() => alert('Shared on Twitter!')}>Twitter</button>
-            <button onClick={() => alert('Shared on LinkedIn!')}>LinkedIn</button>
+      <div className="video-content">
+        <video controls>
+          <source src={video.url} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        <div className="video-info">
+          <h2>{video.title}</h2>
+          <p>{video.description}</p>
+          <div className="interaction-buttons">
+            <button className={`like-button ${liked ? 'liked' : ''}`} onClick={toggleLike}>
+              {liked ? 'Liked' : 'Like'}
+            </button>
+            <button className="share-button" onClick={toggleShareOptions}>Share</button>
+            {shareOptionsVisible && (
+              <div className="share-options">
+                <button onClick={() => alert('Shared on Facebook!')}>Facebook</button>
+                <button onClick={() => alert('Shared on Twitter!')}>Twitter</button>
+                <button onClick={() => alert('Shared on LinkedIn!')}>LinkedIn</button>
+              </div>
+            )}
           </div>
-        )}
+        </div>
       </div>
       <div className="comments-section">
-        <h4>Comments</h4>
+        <h3>Comments</h3>
         <div className="add-comment">
           <input 
             type="text" 
@@ -125,8 +129,10 @@ const VideoDetail = () => {
               ) : (
                 <>
                   <p>{comment.text}</p>
-                  <button onClick={() => handleEditComment(comment.id)}>Edit</button>
-                  <button onClick={() => handleDeleteComment(comment.id)}>Delete</button>
+                  <div className="comment-actions">
+                    <button onClick={() => handleEditComment(comment.id)}>Edit</button>
+                    <button onClick={() => handleDeleteComment(comment.id)}>Delete</button>
+                  </div>
                 </>
               )}
             </div>
